@@ -91,6 +91,11 @@ class HMM:
         self.A = A
         self.B = B
         self.pi = pi
-        
+
     def get_lambda(self):
         return self.lambda_
+    
+
+    # -- algorithms
+
+    
