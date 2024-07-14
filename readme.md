@@ -116,6 +116,15 @@ $Viterbi$($\lambda$, $O$):
 9. $\quad \quad \psi_{t,j} = argmax_{i=1}^{N}(\delta_{t-1,i} * a_{(S_i/S_j)} * e_{(O_t/S_j)})$
 10. Backtrack to find the most likely sequence of hidden states
 
+The memoization of the $\delta$ matrix must look like teh following: 
+
+
+| | C | T | T | C| A |
+|-|---|---|---|---|---|
+|E | $\pi_E * e_{(C/E)}$ | $\leftarrow \mathbf{max \delta_i1 * a_{(E/E)} * e_{(T/E)}}$ | $ \leftarrow \mathbf{max \delta_i2 * a_{(E/E)} * e_{(T/E)}}$ | $ \leftarrow \mathbf{max \delta_i3  * a_{(E/E)} * e_{(C/E)}}$ | $\leftarrow \mathbf{max \delta_i4 * a_{(E/E)} * e_{(A/E)}}$ |
+|5 | $\pi_5 * e_{(C/5)}$ | $ $$\nwarrow$$ max \delta_i1 * a_{(E/5)} * e_{(T/5)}$ | $ \nwarrow max \delta_i2 * a_{(5/5)} * e_{(T/5)}$ | $ \nwarrow max \delta_i3  * a_{(I/5)} * e_{(C/5)}$ |  $\nwarrow max \delta_i4 * a_{(I/5)} * e_{(A/5)}$ |
+|I | $\pi_I * e_{(C/I)}$ | $\nwarrow max \delta_i1 * a_{(E/I)} * e_{(T/I)}$ | $ \nwarrow max \delta_i2 * a_{(5/I)} * e_{(T/I)}$ | $ \nwarrow max \delta_i3  * a_{(I/I)} * e_{(C/I)}$ |  $ \nwarrowmax \delta_i4 * a_{(I/I)} * e_{(A/I)}$ |
+
 
 Running the example:
 ```python
