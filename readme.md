@@ -46,7 +46,8 @@ Matrix that contains the probabilities of transitioning from state $S_i$ to stat
 | $S_E$                      | 0.9   | 0.1   | 0     |
 | $S_5$                      | 0     | 0     | 1     |
 | $S_I$                      | 0   | 0     | 0.9   |
-<!-- <i>note, instead of a 0.1 probability to end after intron, this was edited to have an exon at the end of the sequence</i> -->
+
+<i>note, instead of a 0.1 probability to end after intron, this was edited to have a probability of 1 to have an intron after it, and terminating right after the sequence of observables (nucleotides) finishes at the end of the sequence</i>
 </div>
 
 - **Emission probabilities:** $E=\set{e_{(o/s)}}$  

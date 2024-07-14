@@ -21,8 +21,8 @@ class HMM:
         
     ## Attributes:
     ------------
-    S: set of states  
-    O: set of observations  
+    num_S: num of states  
+    num_O: set of observations  
     A: transition probabilities matrix  
     B: emission probabilities matrix  
     pi: initial probabilities vector  
@@ -38,50 +38,50 @@ class HMM:
     - viterbi_algorithm: computes the viterbi algorithm
 
     '''
-    def __init__(self, S, O, A, B, pi):
-        self.S= S
-        # self.O= O
+    def __init__(self, num_S, num_O, A, B, pi):
+        self.num_S = num_S #set of states will be range(numm_S)
+        self.num_O = num_O
         self.A = A
         self.B = B
         self.pi = pi
         self.lambda_ = (self.A, self.B, self.pi)
 
-    def __init__(self):
-        '''
-        Add manually using setters and getters the following attributes:
-        S: set of states
-        O: set of observations
-        A: transition probabilities matrix
-        B: emission probabilities matrix
-        pi: initial probabilities vector
+    # def __init__(self):
+    #     '''
+    #     Add manually using setters and getters the following attributes:
+    #     num_S: num of states
+    #     num_O: set of observations
+    #     A: transition probabilities matrix
+    #     B: emission probabilities matrix
+    #     pi: initial probabilities vector
 
-        e.g.,  
-        ```
-        model= HMM()
-        model.set_states(S)
-        model.set_observations(O)
-        model.set_transition_probabilities(A)
-        model.set_emission_probabilities(B)
-        model.set_initial_probabilities(pi)
-        ```
-        '''
-        self.S= None
-        # self.O = None
-        self.A = None
-        self.B = None
-        self.pi = None
-        self.lambda_ = None
+    #     e.g.,  
+    #     ```
+    #     model= HMM()
+    #     model.set_states(S)
+    #     model.set_observations(O)
+    #     model.set_transition_probabilities(A)
+    #     model.set_emission_probabilities(B)
+    #     model.set_initial_probabilities(pi)
+    #     ```
+    #     '''
+    #     self.num_S = None
+    #     self.num_O = None
+    #     self.A = None
+    #     self.B = None
+    #     self.pi = None
+    #     self.lambda_ = None
 
     # -- setters and getters
-    def set_states(self, S):
-        self.S =S
+    def set_states(self, num_S):
+        self.num_S = num_S
     def get_states(self):
-        return self.S
+        return self.num_S
     
-    # def set_observations(self, O):
-    #     self.O = O
-    # def get_observations(self):
-    #     return self.O
+    def set_observations(self, num_O):
+        self.num_O = num_O
+    def get_observations(self):
+        return self.num_O
     
     def set_transition_probabilities(self, A):
         self.A = A
@@ -149,6 +149,48 @@ class HMM:
 
         return beta
 
+    def virterbi(self, O):
+        '''
+        Method that takes a sequence of observations and runs the Viterbi algorithm on the model to find the most likely sequence of states
 
+        Parameters:
+        -----------
+        O: list of observations (lenght=T)
 
-    
+        Returns:
+        --------
+        backtrack: list of states (lenght=T)
+        '''
+        A, B, pi = self.get_lambda()
+        N= A.shape[0]
+        T= len(O)
+        delta = np.zeros((N,T))
+        psi = np.zeros((N,T))
+
+        for i in range(N):
+            for t in range(T):
+                if t==0: #base case
+                    delta[i,0]= pi[i]*B[i,O[0]]
+                    psi[i,0]=0 
+                else:
+                    max=0; argmax=0
+                    for k in range(N):
+                        if delta[k,t-1]*A[k,i]>max:
+                            max= delta[k,t-1]*A[k,i]
+                            argmax=k
+                    delta[i,t]= max*B[i,O[t]]
+                    psi[i,t]= argmax
+
+        backtrack = np.zeros(T) #backtracking to get path
+        for t in range(T-1,-1,-1):
+            if t==T-1:
+                max=0; argmax=0
+                for k in range(N):
+                    if delta[k,T-1]>max:
+                        max= delta[k,T-1]
+                        argmax=k
+                backtrack[T-1]= argmax
+            else:
+                backtrack[t]= psi[int(backtrack[t+1]),t+1]
+
+        return backtrack
