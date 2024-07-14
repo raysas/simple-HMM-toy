@@ -1,7 +1,7 @@
 # <i> a simple</i> Hidden Markov Model <i>toy</i>
 
 _HMM implemented from scratch for a simplified 5′ splice-site recognition problem, a decoding problem._  
-This is my implementation to the problem described in ["What is a hidden Markov model?" by Sean Eddy (2004) published in _Nature biotechnology_](https://www.nature.com/articles/nbt1004-1315) [[1](#references)].
+This is my implementation to the problem described in ["What is a hidden Markov model?" by Sean Eddy (2004) published in _Nature biotechnology_](https://www.nature.com/articles/nbt1004-1315) [[1](#references)] in an attempt to understand the concept of _Hidden Markov Models_ and the _Viterbi algorithm_.
 
 $"\ But\ \ we\ \ can't\ \ know\ \ better\ \ until\ \ knowing\ \ better\ \ is\ \ useless\ " - John\ \ Green$
 
@@ -45,7 +45,7 @@ Matrix that contains the probabilities of transitioning from state $S_i$ to stat
 |--------------------------|-------|-------|-------|
 | $S_E$                      | 0.9   | 0.1   | 0     |
 | $S_5$                      | 0     | 0     | 1     |
-| $S_I$                      | 0   | 0     | 0.9   |
+| $S_I$                      | 0   | 0     | 1   |
 
 <i>note, instead of a 0.1 probability to end after intron, this was edited to have a probability of 1 to have an intron after it, and terminating right after the sequence of observables (nucleotides) finishes at the end of the sequence</i>
 </div>
@@ -87,6 +87,20 @@ This will also affect the _initiation_ and _termination_ steps of the algorithms
 In any case, the algotiyhm's implementation in [`HMM.py`](./src/HMM.py) will be able to solve the general decoding problem as well as the special case of the 5' splice site recognition problem.
 
 Other problems solved by HMMs include the _Likelihood (Evaluation)_ and _Learning_ problems. The likelihood problem is about calculating the probability of observing a sequence of observable states given the model parameters - this one uses the forward-backward algorithms. The learning problem is about estimating the model parameters given a sequence of observable states.
+
+## Implementation
+
+The algorithm is implemented in [`HMM.py`](./src/HMM.py) and tested in [`test_HMM.py`](./src/test_HMM.py). The implementation is based on the Viterbi algorithm and the HMM parameters described above. The implementation is tested on a simple example (same one as in the figure) of a sequence of nucleotides and the expected output is the most likely sequence of hidden states that generated the observed sequence.
+
+Running the example:
+```python
+python src/main.py
+```
+Output:
+```text
+EEEEEEEEEEEEEEEEE5IIIIIII
+CTTCATGTGAAGCAGACGTAAGTCA
+```
 
 ## References
 
