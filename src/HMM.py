@@ -40,7 +40,7 @@ class HMM:
     '''
     def __init__(self, S, O, A, B, pi):
         self.S= S
-        self.O= O
+        # self.O= O
         self.A = A
         self.B = B
         self.pi = pi
@@ -66,7 +66,7 @@ class HMM:
         ```
         '''
         self.S= None
-        self.O = None
+        # self.O = None
         self.A = None
         self.B = None
         self.pi = None
@@ -78,10 +78,10 @@ class HMM:
     def get_states(self):
         return self.S
     
-    def set_observations(self, O):
-        self.O = O
-    def get_observations(self):
-        return self.O
+    # def set_observations(self, O):
+    #     self.O = O
+    # def get_observations(self):
+    #     return self.O
     
     def set_transition_probabilities(self, A):
         self.A = A
@@ -114,5 +114,41 @@ class HMM:
     
 
     # -- algorithms
+
+    def forward(self, O):
+        A, B, pi = self.get_lambda()
+
+        N= A.shape[0]
+        T= len(O)
+
+        alpha = np.zeros((N,T))
+
+        for i in range(N):
+            for j in range(T):
+                if j==0: #base case
+                    alpha[i,0]= pi[i]*B[i,O[0]]
+                else:
+                    for k in range(N):
+                        alpha[i,j]+= alpha[k,j-1]*A[k,i]
+                    alpha[i,j]*= B[i,O[j]] #can add it to the loop, independent of k
+
+        return alpha
+    
+    def backward(self, O, termination=None):
+        A, B, pi = self.get_lambda()
+        N= A.shape[0]
+        T= len(O)
+        beta = np.zeros((N,T))
+        for i in range(N):
+            for j in range(T-1, -1, -1):
+                if j==T-1:
+                    beta[i, j]= termination[i] if termination is not None else 1
+                else:
+                    for k in range(N):
+                        beta[i,j]+= A[i,k]*B[k,O[j+1]]*beta[k,j+1]
+
+        return beta
+
+
 
     
