@@ -84,6 +84,7 @@ This problem is a very particular case of the decoding problem where there exist
 </p>
 
 This will also affect the _initiation_ and _termination_ steps of the algorithms. 
+In any case, the algotiyhm's implementation in [`HMM.py`](./src/HMM.py) will be able to solve the general decoding problem as well as the special case of the 5' splice site recognition problem.
 
 Other problems solved by HMMs include the _Likelihood (Evaluation)_ and _Learning_ problems. The likelihood problem is about calculating the probability of observing a sequence of observable states given the model parameters - this one uses the forward-backward algorithms. The learning problem is about estimating the model parameters given a sequence of observable states.
 
