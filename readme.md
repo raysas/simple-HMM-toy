@@ -91,7 +91,7 @@ Other problems solved by HMMs include the _Likelihood (Evaluation)_ and _Learnin
 
 ## Implementation
 
-The algorithm is implemented in [`HMM.py`](./src/HMM.py) and tested in [`test_HMM.py`](./src/test_HMM.py). The implementation is based on the Viterbi algorithm and the HMM parameters described above. The implementation is tested on a simple example (same one as in the figure) of a sequence of nucleotides and the expected output is the most likely sequence of hidden states that generated the observed sequence.
+The algorithm is implemented in [`HMM.py`](./src/HMM.py) and tested in [`main.py`](./src/main.py). The implementation is based on the Viterbi algorithm and the HMM parameters described above. The implementation is tested on a simple example (same one as in the figure) of a sequence of nucleotides and the expected output is the most likely sequence of hidden states that generated the observed sequence.
 
 A model is defined by:  
 - number of hidden states
