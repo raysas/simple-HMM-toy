@@ -1,9 +1,26 @@
+'''
+HMM implementation
+
+```
+from HMM import HMM
+model = HMM(S,O,A,B,pi)
+```
+'''
+
+
+#----------------------------------------------
+# "you won't understand it until you try it"
+#----------------------------------------------
+
 import numpy as np
 
 class HMM:
     '''
-    Hidden Markov Model class:
+    # Hidden Markov Model class:
     --------------------------
+        
+    ## Attributes:
+    ------------
     S: set of states  
     O: set of observations  
     A: transition probabilities matrix  

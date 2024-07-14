@@ -3,7 +3,7 @@
 _HMM implemented from scratch for a simplified 5′ splice-site recognition problem._  
 This is my implementation to the problem described in ["What is a hidden Markov model?" by Sean Eddy (2004) published in _Nature biotechnology_](https://www.nature.com/articles/nbt1004-1315) [[1](#references)].
 
-$"But\ we\ can't\ know\ better\ until\ knowing\ better\ is\ useless" - \bold{John\ Green}$
+$"\ But\ \ we\ \ can't\ \ know\ \ better\ \ until\ \ knowing\ \ better\ \ is\ \ useless\ " - John\ \ Green$
 
 
 ## Background 
@@ -27,17 +27,18 @@ set of hidden states where $E$ is the exon state, $5$ is the 5' splice site stat
 set of observable states, in this case the nucleotides 
 - **Initial probabilities:** $\pi = \set {\pi_E, \pi_5, \pi_I}=\set{1,0,0}$  
 Initial probabilities of being in each state starting from the state at $time=0$. In this problem, the nucleotide sequence always starts with an exon; ___note, the sum of all initial probabilities must be 1___
-- **Transition probabilities:** $T=\set{t_{Si/Sj}}$
-Matrix that contains the probabilities of transitioning from state $S_i$ to state $S_j$. In this problem, the transition probabilities between the 3 states $S_E$, $S_I$, and $S_5$ should be a $3*3$ matrix as follows: 
+- **Transition probabilities:** $A=\set{a_{Si \rightarrow Sj}}$
+Matrix that contains the probabilities of transitioning from state $S_i$ to state $S_j$. In this problem, the transition probabilities between the 5 states $S_{start}$, $S_E$, $S_5$, $S_I$, and $S_{end}$ should be a $5*5$ matrix as follows: 
 
 <div align="center">
 
-| $t_{Si/Sj}$ | $S_E$ | $S_5$ | $S_I$ |
-|----------|-----|-----|-----|
-| $S_E$      | 0.9 | 0 | 0.1 |  
-| $S_5$      | 0.1 | 0 | 1 |
-| $S_I$      | 0 | 0 | 0.9 |
-
+| $a_{Si \rightarrow Sj}$ | $S_{start}$ | $S_E$ | $S_5$ | $S_I$ | $S_{end}$ |
+|--------------------------|-------------|-------|-------|-------|----------|
+| $S_{start}$              | 0           | 1     | 0     | 0     | 0        |
+| $S_E$                    | 0           | 0.9   | 0.1   | 0     | 0        |
+| $S_5$                    | 0           | 0     | 0   | 1   | 0        |
+| $S_I$                    | 0           | 0   | 0     | 0.9   | 0.1        |
+| $S_{end}$                | 0           | 0     | 0     | 0     | 0        |
 <!-- <i>note, instead of a 0.1 probability to end after intron, this was edited to have an exon at the end of the sequence</i> -->
 </div>
 
